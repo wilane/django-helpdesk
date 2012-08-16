@@ -13,12 +13,10 @@ through templates/helpdesk/help_api.html.
 
 from datetime import datetime
 
-from django import forms
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
-from django.template import loader, Context
 from django.utils import simplejson
 from django.views.decorators.csrf import csrf_exempt
 

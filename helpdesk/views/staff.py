@@ -8,12 +8,10 @@ views/staff.py - The bulk of the application - provides most business logic and
 """
 
 from datetime import datetime
-import sys
 
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required, user_passes_test
-from django.core.files.base import ContentFile
+from django.contrib.auth.decorators import  user_passes_test
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ValidationError
 from django.core import paginator
@@ -21,14 +19,16 @@ from django.db import connection
 from django.db.models import Q
 from django.http import HttpResponseRedirect, Http404, HttpResponse, HttpResponseForbidden
 from django.shortcuts import render_to_response, get_object_or_404
-from django.template import loader, Context, RequestContext
+from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from django.utils.html import escape
 from django import forms
 
-from helpdesk.forms import TicketForm, UserSettingsForm, EmailIgnoreForm, EditTicketForm, TicketCCForm, EditFollowUpForm, TicketDependencyForm
+from helpdesk.forms import (TicketForm, UserSettingsForm, EmailIgnoreForm,
+                            EditTicketForm, TicketCCForm, EditFollowUpForm, TicketDependencyForm)
 from helpdesk.lib import send_templated_mail, query_to_dict, apply_query, safe_template_context
-from helpdesk.models import Ticket, Queue, FollowUp, TicketChange, PreSetReply, Attachment, SavedSearch, IgnoreEmail, TicketCC, TicketDependency
+from helpdesk.models import (Ticket, Queue, FollowUp, TicketChange, PreSetReply,
+                             Attachment, SavedSearch, IgnoreEmail, TicketCC, TicketDependency)
 from helpdesk.settings import HAS_TAG_SUPPORT
 from helpdesk import settings as helpdesk_settings
   
