@@ -7,17 +7,16 @@ views/public.py - All public facing views, eg non-staff (no authentication
                   required) views.
 """
 
-from datetime import datetime
 
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, Http404, HttpResponse
-from django.shortcuts import render_to_response, get_object_or_404
-from django.template import loader, Context, RequestContext
+from django.http import HttpResponseRedirect
+from django.shortcuts import render_to_response
+from django.template import  RequestContext
 from django.utils.translation import ugettext as _
 
 from helpdesk import settings as helpdesk_settings
 from helpdesk.forms import PublicTicketForm
-from helpdesk.lib import send_templated_mail, text_is_spam
+from helpdesk.lib import text_is_spam
 from helpdesk.models import Ticket, Queue, UserSettings, KBCategory
 
 
@@ -35,7 +34,7 @@ def homepage(request):
             return HttpResponseRedirect(reverse('helpdesk_dashboard'))
 
     if request.method == 'POST':
-        form = PublicTicketForm(request.POST, request.FILES)
+        form = PublicTicketForm(request.POST, request.FILES, request=request)
         form.fields['queue'].choices = [('', '--------')] + [[q.id, q.title] for q in Queue.objects.filter(allow_public_submission=True)]
         if form.is_valid():
             if text_is_spam(form.cleaned_data['body'], request):
