@@ -396,7 +396,10 @@ class Ticket(models.Model):
         """
         from django.contrib.sites.models import Site
         from django.core.urlresolvers import reverse
-        site = Site.objects.get_current()
+        try:
+            site = Site.objects.get_current()
+        except:
+            site = Site(domain='configure-django-sites.com')
         return u"http://%s%s?ticket=%s&email=%s" % (
             site.domain,
             reverse('helpdesk_public_view'),
@@ -412,7 +415,10 @@ class Ticket(models.Model):
         """
         from django.contrib.sites.models import Site
         from django.core.urlresolvers import reverse
-        site = Site.objects.get_current()
+        try:
+            site = Site.objects.get_current()
+        except:
+            site = Site(domain='configure-django-sites.com')
         return u"http://%s%s" % (
             site.domain,
             reverse('helpdesk_view',
@@ -621,7 +627,7 @@ class Attachment(models.Model):
 
     mime_type = models.CharField(
         _('MIME Type'),
-        max_length=30,
+        max_length=255,
         )
 
     size = models.IntegerField(

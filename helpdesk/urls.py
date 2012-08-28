@@ -39,6 +39,10 @@ urlpatterns = patterns('helpdesk.views.staff',
         'followup_edit',
         name='helpdesk_followup_edit'),
 
+    url(r'^tickets/(?P<ticket_id>[0-9]+)/followup_delete/(?P<followup_id>[0-9]+)/$',
+        'followup_delete',
+        name='helpdesk_followup_delete'),
+
     url(r'^tickets/(?P<ticket_id>[0-9]+)/edit/$',
         'edit_ticket',
         name='helpdesk_edit'),
@@ -139,11 +143,11 @@ urlpatterns += patterns('helpdesk.views.public',
 )
 
 urlpatterns += patterns('',
-    url(r'^rss/user/(?P<user_name>[A-Za-z0-9_-]+)/$',
+    url(r'^rss/user/(?P<user_name>[\.A-Za-z0-9_-]+)/$',
         login_required(feeds.OpenTicketsByUser()),
         name='helpdesk_rss_user'),
     
-    url(r'^rss/user/(?P<user_name>[A-Za-z0-9_-]+)/(?P<queue_slug>[A-Za-z0-9_-]+)/$',
+    url(r'^rss/user/(?P<user_name>[\.A-Za-z0-9_-]+)/(?P<queue_slug>[A-Za-z0-9_-]+)/$',
         login_required(feeds.OpenTicketsByUser()),
         name='helpdesk_rss_user_queue'),
     
